@@ -1,0 +1,12 @@
+.DS_Store
+Thumbs.db
+db.json
+*.log
+node_modules/*
+!node_modules/hexo-theme-fluid/
+node_modules/hexo-theme-fluid/*
+!node_modules/hexo-theme-fluid/source/
+!node_modules/hexo-theme-fluid/_config.yml
+public/
+.deploy*/
+_multiconfig.yml
