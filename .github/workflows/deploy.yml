@@ -38,6 +38,12 @@ jobs:
       - name: Build Hexo Site
         run: hexo generate
       
+      - name: Configure Git
+        run: |
+          git config --global user.name "Algo-X-Deployer-Bot"
+          git config --global user.email "Deployer-Bot@algo-x.cn"
+          git config --global init.defaultBranch main
+      
       - name: Deploy Website
         run: hexo deploy
       
