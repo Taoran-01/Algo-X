@@ -31,6 +31,8 @@ jobs:
           npm ci
       
       - name: Configure SSH
+        env:
+          DEPLOY_KEY_PRIVATE: ${{ secrets.DEPLOY_KEY_PRIVATE }}
         run: |
           mkdir -p ~/.ssh
           echo "$DEPLOY_KEY_PRIVATE" > ~/.ssh/id_rsa
