@@ -40,8 +40,8 @@ jobs:
       
       - name: Configure Git
         run: |
-          git config --global user.name "Algo-X-Deployer-Bot"
-          git config --global user.email "Deployer-Bot@algo-x.cn"
+          git config --global user.name "Taoran-01"
+          git config --global user.email "taoran200905@163.com"
           git config --global init.defaultBranch main
       
       - name: Deploy Website
