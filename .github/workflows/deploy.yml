@@ -43,7 +43,7 @@ jobs:
       
       - name: Test SSH Connection
         run: |
-          ssh-keygen -lf ~/.ssh/id_rsa
+          # ssh-keygen -lf ~/.ssh/id_rsa
           ssh -T git@github.com 2>&1 | tee result.log || \
           grep -q "GitHub does not provide shell access"
 
