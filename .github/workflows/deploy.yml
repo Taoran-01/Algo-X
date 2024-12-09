@@ -30,10 +30,15 @@ jobs:
           npm install hexo-cli -g
           npm ci
       
-      - name: Configure SSH with GitHub Actions
-        uses: webfactory/ssh-agent@v0.9.0
-        with: 
-          ssh-private-key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_KEY_PRIVATE" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      
+      - name: Test SSH Connection
+        run: ssh -T git@github.com
       
       - name: Build Hexo Site
         run: hexo generate
