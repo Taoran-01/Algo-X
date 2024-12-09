@@ -1,0 +1,43 @@
+name: Hexo Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x, 22.x]
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: Install Dependencies
+        run: npm ci
+      
+      - name: Configure SSH with GitHub Actions
+        uses: webfactory/ssh-agent@v0.9.0
+        with: 
+          ssh-private-key: ${{ secrets.DEPLOY_KEY_PRIVATE }}
+      
+      - name: Build Hexo Site
+        run: hexo generate
+      
+      - name: Deploy Website
+        run: hexo deploy
+      
+      - name: Clean Build Files
+        run: hexo clean
