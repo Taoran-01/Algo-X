@@ -34,11 +34,14 @@ jobs:
         run: |
           mkdir -p ~/.ssh
           echo "$DEPLOY_KEY_PRIVATE" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
       
       - name: Test SSH Connection
-        run: ssh -T git@github.com
+        run: |
+          ssh-keygen -lf ~/.ssh/id_rsa
+          ssh -T git@github.com
       
       - name: Build Hexo Site
         run: hexo generate
