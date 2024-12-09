@@ -32,8 +32,7 @@ jobs:
       
       - name: Configure SSH
         env:
-          # DEPLOY_KEY_PRIVATE: ${{ secrets.DEPLOY_KEY_PRIVATE }}
-          DEPLOY_KEY_PRIVATE: none
+          DEPLOY_KEY_PRIVATE: ${{ secrets.DEPLOY_KEY_PRIVATE }}
         run: |
           mkdir -p ~/.ssh
           echo "$DEPLOY_KEY_PRIVATE" > ~/.ssh/id_rsa
@@ -43,8 +42,8 @@ jobs:
       
       - name: Test SSH Connection
         run: |
-          # ssh-keygen -lf ~/.ssh/id_rsa
-          ssh -T git@github.com 2>&1 | tee result.log || \
+          ssh-keygen -lf ~/.ssh/id_rsa
+          ssh -T git@github.com 2>&1 | \
           grep -q "GitHub does not provide shell access"
 
       - name: Build Hexo Site
