@@ -102,7 +102,7 @@ theme: fluid
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
 - type: git
-  repo: https://github.com/Taoran-01/ALgo-X.git
+  repo: git@github.com:Taoran-01/Algo-X.git
   branch: gh-pages
 # - type: baidu_url_submitter
 
