@@ -12,9 +12,9 @@ tags:
 
 基于内存预装载的循环双端队列，部署在 Node.js 环境。
 
-[Github Repo](https://github.com/Taoran-01/js-circular-deque) | [npm package](https://www.npmjs.com/package/circular-deque)
-Language: [en](https://github.com/Taoran-01/js-circular-deque) | [zh-cn](./)  
-License: [MIT license](https://github.com/Taoran-01/js-circular-deque?tab=MIT-1-ov-file)
+[Github Repo](https://github.com/Taoran-01/JS-Circular-Deque) | [npm package](https://www.npmjs.com/package/circular-deque)
+Language: [en](https://github.com/Taoran-01/JS-Circular-Deque) | [zh-cn](./)  
+License: [MIT license](https://github.com/Taoran-01/JS-Circular-Deque?tab=MIT-1-ov-file)
 
 ---
 ### 原理
@@ -33,7 +33,7 @@ const deque = require('circular-deque');
 ```
 #### 创建对象 | `constructor()`
 ``` javascript
-const t = new deque(); // #1
+const t = new deque();   // #1
 const t = new deque(10); // #2
 ```
 方法 #1：不预分配长度。  
@@ -58,16 +58,21 @@ t.pop_back();
 时间复杂度：$O(1)$。
 
 ---
+### 函数别名
+```
+push_back  <= enqueue | push | pushBack
+pop_front  <= dequeue | pop | popFront
+pop_back   <= popBack
+push_front <= pushFront
+```
+
+---
 ### 往期版本
-#### `v1.0.0`
-错误版本，写挂了 QWQ  
-请不要使用该版本。
-#### `v1.0.1`
-1. [x] 修正 Bug，添加 `README` 文档。
+#### `v0.9.0`
+1. [x] 添加 `README` 文档。
 2. [x] 优化 `pop` 操作，减小空间开销。
 
 ---
 ### 开发计划
 1. [ ] 根据数据结构性能表现，优化参数。
 2. [ ] 检查内存泄漏。
-3. [ ] 增加函数映射，如 `enqueue`、`pop` 等。
