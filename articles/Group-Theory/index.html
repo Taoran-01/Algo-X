@@ -1,0 +1,824 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=light>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar_round.png">
+  <link rel="icon" href="/img/avatar_round.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Taoran">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="知识前置费马小定理若 $p$ 为素数，$\gcd(a,p)&#x3D;1$，则 $a^{p-1}\equiv1$。 模运算对积的性质对于 $\forall a,b,m\in\mathbb N$，令 $a’&#x3D;a\operatorname{mod}m$，$b’&#x3D;b\operatorname{mod} m$，有 $a\times b\equiv a’\times b’\ (\ope">
+<meta property="og:type" content="article">
+<meta property="og:title" content="群论简介">
+<meta property="og:url" content="https://preview.algo-x.cn/articles/Group-Theory/index.html">
+<meta property="og:site_name" content="Algo-X.cn">
+<meta property="og:description" content="知识前置费马小定理若 $p$ 为素数，$\gcd(a,p)&#x3D;1$，则 $a^{p-1}\equiv1$。 模运算对积的性质对于 $\forall a,b,m\in\mathbb N$，令 $a’&#x3D;a\operatorname{mod}m$，$b’&#x3D;b\operatorname{mod} m$，有 $a\times b\equiv a’\times b’\ (\ope">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-07-16T12:44:12.000Z">
+<meta property="article:modified_time" content="2025-03-27T08:11:18.590Z">
+<meta property="article:author" content="Taoran">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>群论简介 - Algo-X.cn</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"preview.algo-x.cn","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":75,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":"#"},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Algo-X.cn</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/articles/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>文章</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/apps/errata/" target="_self">
+                <i class="iconfont icon-bug"></i>
+                <span>勘误表</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/apps/" target="_self">
+                <i class="iconfont icon-briefcase"></i>
+                <span>应用</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/" target="_self">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/background.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="群论简介"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-07-16 20:44" pubdate>
+          2024年7月16日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">群论简介</h1>
+            
+              <p id="updated-time" class="note note-info" style="">
+                
+                  
+                    本文最后更新于 2025年3月27日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<h3 id="知识前置"><a href="#知识前置" class="headerlink" title="知识前置"></a>知识前置</h3><h4 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h4><p>若 $p$ 为素数，$\gcd(a,p)&#x3D;1$，则 $a^{p-1}\equiv1$。</p>
+<h4 id="模运算对积的性质"><a href="#模运算对积的性质" class="headerlink" title="模运算对积的性质"></a>模运算对积的性质</h4><p>对于 $\forall a,b,m\in\mathbb N$，令 $a’&#x3D;a\operatorname{mod}m$，$b’&#x3D;b\operatorname{mod} m$，有 $a\times b\equiv a’\times b’\ (\operatorname{mod} m)$。</p>
+<h4 id="函数的复合"><a href="#函数的复合" class="headerlink" title="函数的复合"></a>函数的复合</h4><p>指将一个函数的输出作为另一个函数的输入。具体来说，如果有两个函数 $f:X\rightarrow Y$ 和 $g:Y\rightarrow Z$，它们的复合函数 $g\circ f:X\rightarrow Z$ 定义为 $(g \circ f)(x) &#x3D; g(f(x))$。</p>
+<hr>
+<h3 id="群的定义"><a href="#群的定义" class="headerlink" title="群的定义"></a>群的定义</h3><p>群是由一种集合及一个二元运算所组成的。</p>
+<p>设 $G$ 是一个非空集合，“$\cdot$”是它的一个二元运算。若 $G$ 对 $\cdot$ 构成一个群，则 $G$ 与 $\cdot$ 满足以下性质：</p>
+<ul>
+<li>封闭性：对于 $\forall a,b\in G$，有 $a\cdot b\in G$。</li>
+<li>满足结合律：对于 $\forall a,b,c\in G$，有 $(a\cdot b)\cdot c&#x3D;a\cdot(b\cdot c)$。</li>
+<li>存在单位元：$\exists e\in G$，使得 $\forall a\in G$，$a\cdot e&#x3D;e\cdot a&#x3D;a$。则称 $e$ 为群 $(G,\cdot)$ 的单位元。</li>
+<li>存在逆元：对于 $\forall a\in G$，$\exists b\in G$ 使得 $a\cdot b&#x3D;b\cdot a&#x3D;e$，则称 $a$ 与 $b$ 互为逆元。$b$ 记作 $a^{-1}$。</li>
+</ul>
+<p>通常来说，$G$ 对 $\cdot$ 构成的群，记作 $(G,\cdot)$。“$\cdot$”称为“乘法”，“$a\cdot b$”称为“$a$ 与 $b$ 的积”，简写为“$ab$”。</p>
+<p>若 $G$ 的元素个数有限，则构成的群为有限群，反之则构成无限群。</p>
+<p><strong>注意</strong>：此处的“乘法 $\cdot$”不是一般意义上四则运算的乘法。它可以是任何对应的运算，例如集合的交与并、函数的卷积与符合等等。另外，该运算<strong>不一定满足交换律</strong>，即 $a\cdot b$ 的运算结果可能不等于 $b\cdot a$ 的运算结果。</p>
+<hr>
+<h3 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h3><h4 id="整数集与加法"><a href="#整数集与加法" class="headerlink" title="整数集与加法"></a>整数集与加法</h4><p>整数集对加法构成群 $(\mathbb Z,+)$：</p>
+<ul>
+<li>对于 $\forall a,b\in\mathbb Z$，$a+b\in\mathbb Z$。</li>
+<li>对于 $\forall a,b,c\in\mathbb Z$，$(a+b)+c&#x3D;a+(b+c)$。</li>
+<li>$\exists e&#x3D;0\in\mathbb Z$，使得 $\forall a\in\mathbb Z$，$a+e&#x3D;e+a&#x3D;a$，群的单位元为 $0$。</li>
+<li>对于 $\forall a\in\mathbb Z$，$\exists b&#x3D;-a\in\mathbb Z$ 使得 $a+b&#x3D;b+a&#x3D;e$，即 $a$ 在群中的逆元为 $-a$。</li>
+</ul>
+<h4 id="正整数集与模意义下的乘法"><a href="#正整数集与模意义下的乘法" class="headerlink" title="正整数集与模意义下的乘法"></a>正整数集与模意义下的乘法</h4><p>定义模意义下的乘法 $a\cdot b&#x3D;(a\times b)\operatorname{mod}p$，其中 $p$ 是一个被定义的素数。</p>
+<p>非负整数集对模意义下的乘法构成群 $(\mathbb N,\cdot)$：</p>
+<ul>
+<li>对于 $\forall a,b\in\mathbb N$，$a\cdot b\in\mathbb N$。</li>
+<li>对于 $\forall a,b,c\in\mathbb N$，由模运算对积的性质可得 $(a\cdot b)\cdot c&#x3D;a\cdot(b\cdot c)$。</li>
+<li>$\exists e&#x3D;1\in\mathbb Z$，使得 $\forall a\in\mathbb N$，$a\cdot e&#x3D;e\cdot a&#x3D;a$，群的单位元为 $1$。</li>
+<li>对于 $\forall a\in\mathbb N$，由费马小定理可得 $\exists b&#x3D;a^{p-2}\operatorname{mod}p\in\mathbb N$ 使得 $a\cdot b&#x3D;b\cdot a&#x3D;e$，即 $a$ 在群中的逆元为 $a^{p-2}$。</li>
+</ul>
+<hr>
+<h3 id="群的运算"><a href="#群的运算" class="headerlink" title="群的运算"></a>群的运算</h3><p>对于 $g\in G,\ H\subseteq G$，定义 $g\cdot H&#x3D;{g\cdot h|h\in H}$，简写为 $gH$；$H\cdot g&#x3D;{h\cdot g|h\in H}$。</p>
+<p>对于 $A,B\subseteq G$，定义 $A\cdot B&#x3D;{a\cdot b|a\in A,b\in B}$，简写为 $AB$。</p>
+<p>对于 $H\subseteq G$，定义 $H^{-1}&#x3D;{h^{-1}|h\in H}$。</p>
+<hr>
+<h3 id="替换定理"><a href="#替换定理" class="headerlink" title="替换定理"></a>替换定理</h3><p>若 $(G,\cdot)$ 是群，对于 $\forall g\in G$，$gG&#x3D;Gg&#x3D;G$。<br>解释：从 $G$ 中取出一个元素 $g$，再将其与原来的每个元素做乘法，得到的新集合与原集合相同。</p>
+<p>感性理解：根据群的封闭性，再原集合 $G$ 中，任意两个数相乘的结果都在 $G$ 中。此时用 $g$ 再乘，得到的结果也只能在 $G$ 中。根据集合互异性，结果数量与原集合数量相等，所以两集合相同。</p>
+<hr>
+<h3 id="子群"><a href="#子群" class="headerlink" title="子群"></a>子群</h3><p>若 $(G,\cdot)$ 是群，$H\neq\emptyset$，$H\subseteq G$ 且 $(H,\cdot)$ 也是群，则称 $(H,\cdot)$ 为 $(G,\cdot)$ 的子群。</p>
+<hr>
+<h3 id="阿贝尔群"><a href="#阿贝尔群" class="headerlink" title="阿贝尔群"></a>阿贝尔群</h3><p>若群 $(G,\cdot)$ 满足交换律，即对于 $\forall a,b\in G$，满足 $a\cdot b&#x3D;b\cdot a$，则称其为阿贝尔群，又称交换群。</p>
+<hr>
+<h3 id="函数群"><a href="#函数群" class="headerlink" title="函数群"></a>函数群</h3><p>函数群是群概念在函数空间中的应用。例如，考虑所有从实数到实数的连续函数的集合，如果定义适当的运算（如函数的乘积或和），这个集合可以形成一个群。</p>
+<h4 id="乘法群"><a href="#乘法群" class="headerlink" title="乘法群"></a>乘法群</h4><p>函数的运算是逐点乘积。<br>如果 $f$ 和 $g$ 是两个函数，它们的运算结果是 $(f\cdot g)(x)&#x3D;f(x)\cdot g(x)$。</p>
+<h4 id="复合群"><a href="#复合群" class="headerlink" title="复合群"></a>复合群</h4><p>在函数群的背景下，复合群指的是函数之间的运算是通过函数的符合来定义的。<br>如果 $f$ 和 $g$ 是两个函数，它们的运算结果是 $(f\circ g)(x)&#x3D;f(g(x))$。</p>
+<ul>
+<li>单位元：一个恒等函数 $e$，有 $e\circ f&#x3D;f\circ e&#x3D;f$。</li>
+<li>逆元：逆函数 $f^{-1}$，满足 $f\circ f^{-1}&#x3D;f^{-1}\circ f&#x3D;e$。</li>
+</ul>
+<p>一个典型的例子：</p>
+<blockquote>
+<p><strong>所有连续函数的集合</strong>对复合运算构成函数群。在这种情况下，如果两个函数复合在一起，其结果仍然是一个函数，这就满足了<strong>封闭性</strong>。结合律则意味着函数复合是<strong>可结合</strong>的，即 $(f\circ g)\circ h&#x3D;f\circ(g\circ h)$。而单位元存在性则意味着存在一个恒等函数，它与任何函数的复合<strong>都不会改变</strong>函数的结果。</p>
+</blockquote>
+<p>通过这种方式，群论为研究函数的性质和变换提供了一种强大的代数框架。</p>
+<hr>
+<h3 id="群的应用"><a href="#群的应用" class="headerlink" title="群的应用"></a>群的应用</h3><h4 id="数学"><a href="#数学" class="headerlink" title="数学"></a>数学</h4><p>群论在数学上被广泛地运用，通常以自同构群的形式体现某些结构的内部对称性。结构的内部对称性常常和一种不变式性质同时存在。如果在一类操作中存在不变式，那这些操作转换的组合和不变式统称为一个对称群。</p>
+<p>阿贝尔群概括了另外几种抽象集合研究的结构，例如环、域、模。在代数拓扑中，群用于描述拓扑空间转换中不变的性质，例如基本群和透射群。</p>
+<p>李群的概念在微分方程和流形中都有很重要的角色，因其结合了群论和分析数学，李群能很好的描述分析数学结构中的对称性。对这类群的分析又叫调和分析。在组合数学中，交换群和群作用常用来简化在某些集合内的元素的计算。</p>
+<h4 id="物理"><a href="#物理" class="headerlink" title="物理"></a>物理</h4><p>群论在物理学中也有着重要的应用。对称性是物理学中一个重要的概念，而群论提供了一种严密的数学工具来研究对称性。</p>
+<ul>
+<li>群论在粒子物理中用于分类基本粒子和它们的相互作用，通过对称性原理揭示物理定律的内在结构。</li>
+<li>群论在量子力学中用于描述粒子的对称性和守恒定律，帮助理解和预测粒子的行为和相互作用。</li>
+<li>群论在凝聚态物理学中，帮助描述固体材料的对称性质，指导材料的电子结构和性质研究。</li>
+</ul>
+<h4 id="化学"><a href="#化学" class="headerlink" title="化学"></a>化学</h4><p>群论被广泛应用于研究晶体结构，因为它提供了一种系统化的方法来分析和分类晶体的结构和性质。</p>
+<p>晶体的许多物理性质，如电导率、热导率和光学性质，与其对称性密切相关。群论可以帮助我们理解这些性质，并预测在改变晶体对称性时它们的变化。<br>晶体中的缺陷，如位错和杂质，也会影响其对称性。群论可以用来分析这些缺陷对晶体结构和性质的影响。</p>
+<h4 id="计算机科学"><a href="#计算机科学" class="headerlink" title="计算机科学"></a>计算机科学</h4><p>群论在计算机科学上也有广泛的应用，可以帮助设计高效的算法和数据结构。</p>
+<p>群论提供了一种优化算法的思路。群论中的群操作具有封闭性、结合律、单位元和逆元等性质，这些性质可以被用于算法设计中。</p>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>群论作为一种抽象代数学的分支，具有广泛的应用前景。它不仅能帮我们更好地理解和研究实际问题，也为各个领域的发展和创新提供了数学支持和指导。</p>
+<hr>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>群论 - <a target="_blank" rel="noopener" href="https://oi-wiki.org/math/group-theory/">OI-Wiki</a><br>群论 - <a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BE%A4%E8%AE%BA/10980672">百度百科</a><br>数学中的群论应用 - <a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/6c8c515e270c844769eae009581b6bd97e19bc26.html">百度文库</a><br>揭秘数学中的群论：函数的集合与代数的新篇章 - <a target="_blank" rel="noopener" href="https://baijiahao.baidu.com/s?id=1790891085022022783">百家号-闻讯百通</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/%E7%AC%94%E8%AE%B0/" class="category-chain-item">笔记</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/%E7%AC%94%E8%AE%B0/%E6%95%B0%E5%AD%A6/" class="category-chain-item">数学</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>群论简介</div>
+      <div>https://preview.algo-x.cn/articles/Group-Theory/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Taoran</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年7月16日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2025年3月27日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="SA - 相同方式共享">
+                    <i class="iconfont icon-cc-sa"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/articles/Modular-Multiplicative-Inverse/" title="乘法逆元">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">乘法逆元</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/articles/Catalan/" title="卡特兰数">
+                        <span class="hidden-mobile">卡特兰数</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <body>×</body> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
